@@ -1,0 +1,78 @@
+A simple to use (hopefully) http client for the node.js platform. 
+It adds easy control of HTTPS, gzip compression and cookie handling 
+to the basic http functionality provided by node.js http library.
+
+Dependencies:
+- A patched version of the http.js node module is included with the 
+  source. The diff for this patch against node release 0.1.26 can
+  be found here: 
+  http://gist.github.com/293534
+  
+  The patch returns the response headers as an array instead of as
+  a comma separated string
+
+- if you want to use gzip you will need the node-compress module
+  built and available (currently the script expects compress.node
+  to be in the same directory as httpclient.js
+  
+Todo:
+	- better Error handling
+	- full set of http client tests to compare with other http clients
+	  (e.g. libcurl, libwww, winhttp)
+	- handle all cookies correctly according to RFC
+	- allow saving and restoring of cookies 
+	- handle gzip encoding from client to server (should be simple)
+	- allow specification of timeouts for connection and response
+	- allow explicit closing of connection
+	- allow option to automatically follow redirects (should be a simple change)
+	- property content handling (binary, text encodings etc) based on http headers
+	- handle http expiration headers and cacheing policies
+	- handle head, put and delete requests
+	etc, etc, etc...
+	
+Note:
+	- currently, the httpclient object will only allow one request at a time
+	  for a given protocol and host name (e.g. http://www.google.com). this
+	  behaviour is handled in http.js where requests get queued up and executed
+	  in sequence. if you want to send parallel requests to the same site, then
+	  create a new httpclient object for each of the parallel requests. Am not
+	  sure whether this is the correct behaviour but it seems to work well for 
+	  what i need right now. 
+	
+Usage:
+
+(see example.js) 
+
+var sys = require("sys");
+var httpcli = require("./httpclient");
+
+var url = "http://www.betfair.com";
+var surl = "https://www.betfair.com";
+
+function verifyTLS(request) {
+	sys.puts(sys.inspect(request));
+	return true;
+}
+
+var client = new httpcli.httpclient();	
+
+// a simple http request with default options (gzip off, keepalive off, https off)
+client.perform(url, "GET", function(result) {
+	sys.puts(sys.inspect(result));
+}, null);
+
+var client2 = new httpcli.httpclient();
+
+// nested calls with gzip compression and keep-alive
+client2.perform(url, "GET", function(result) {
+	sys.puts(sys.inspect(result));
+	client2.perform(url, "GET", function(result) {
+		sys.puts(sys.inspect(result));
+		// https request with callback handling of certificate validation
+		client2.perform(surl, "GET", function(result) {
+			sys.puts(sys.inspect(result));
+		}, null, {"Accept-Encoding" : "none,gzip", "Connection" : "close"}, verifyTLS);
+	}, null, {"Accept-Encoding" : "none,gzip", "Connection" : "Keep-Alive"});
+}, null, {"Accept-Encoding" : "none,gzip", "Connection" : "Keep-Alive"});
+
+
