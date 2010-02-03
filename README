@@ -12,8 +12,9 @@ Dependencies:
   a comma separated string
 
 - if you want to use gzip you will need the node-compress module
-  built and available (currently the script expects compress.node
-  to be in the same directory as httpclient.js. node-compress is here:
+  built and available in the lib directory (or the same directory 
+  as httpclient.js). node-compress is here:
+  
   http://github.com/waveto/node-compress
   
 Todo:

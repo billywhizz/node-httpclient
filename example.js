@@ -1,5 +1,5 @@
 var sys = require("sys");
-var httpcli = require("./httpclient");
+var httpcli = require("./lib/httpclient");
 
 var url = "http://www.betfair.com";
 var surl = "https://www.betfair.com";
@@ -14,7 +14,7 @@ var client = new httpcli.httpclient();
 // a simple http request with default options (gzip off, keepalive off, https off)
 client.perform(url, "GET", function(result) {
 	sys.puts(sys.inspect(result));
-}, null);
+});
 
 var client2 = new httpcli.httpclient();
 
@@ -29,5 +29,3 @@ client2.perform(url, "GET", function(result) {
 		}, null, {"Accept-Encoding" : "none,gzip", "Connection" : "close"}, verifyTLS);
 	}, null, {"Accept-Encoding" : "none,gzip", "Connection" : "Keep-Alive"});
 }, null, {"Accept-Encoding" : "none,gzip", "Connection" : "Keep-Alive"});
-
-
