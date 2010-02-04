@@ -1,5 +1,5 @@
 var sys = require("sys");
-var httpcli = require("./httpclient");
+var httpcli = require("./lib/httpclient");
 var testnum = 0;
 var client = new httpcli.httpclient();	
 
