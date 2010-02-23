@@ -1,8 +1,8 @@
 var sys = require("sys");
 var httpcli = require("./lib/httpclient");
 
-var url = "http://www.betfair.com";
-var surl = "https://www.betfair.com";
+var url = "http://www.betdaq.com";
+var surl = "https://www.betdaq.com";
 
 function verifyTLS(request) {
 	sys.puts(sys.inspect(request));
