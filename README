@@ -3,14 +3,6 @@ It adds easy control of HTTPS, gzip compression and cookie handling
 to the basic http functionality provided by node.js http library.
 
 Dependencies:
-- A patched version of the http.js node module is included with the 
-  source. The diff for this patch against node release 0.1.26 can
-  be found here: 
-  http://gist.github.com/293534
-  
-  The patch returns the response headers as an array instead of as
-  a comma separated string
-
 - if you want to use gzip you will need the node-compress module
   built and available in the lib directory (or the same directory 
   as httpclient.js). node-compress is here:

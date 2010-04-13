@@ -57,5 +57,5 @@ function runtests(url, foo) {
 
 // put a domain name and path here for an address that has the features you want to test (ssl, gzip, keepalive)
 // be sure to exclude the protocol
-runtests("www.google.co.uk", runtest);
-runtests("www.google.co.uk", runtest2);
+//runtests("www.google.co.uk", runtest);
+runtests("mail.google.com", runtest2);

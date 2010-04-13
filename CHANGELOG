@@ -1,3 +1,10 @@
+2010.04.13, Version 0.1.0
+   * Updates for latest node release - v 0.1.90
+   * Merged changes from http://github.com/ibrow to check for compress module
+   * Only sent compression headers if compress module is available
+   * Remove need to patch node source by changing http.IncomingMessage.prototype._addHeaderLine within httpclient.js at runtime
+   * still dependent on http_old node.js module as there is no SSL support in the latest http module
+
 2010.02.23, Version 0.0.3
    * Updates for latest node release
 
